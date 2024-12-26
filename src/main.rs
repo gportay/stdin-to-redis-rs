@@ -28,6 +28,11 @@ fn main() -> io::Result<()> {
             .arg(float)
             .exec(&mut conn)
             .expect("failed to TS.ADD");
+        redis::cmd("PUBLISH")
+            .arg(key.clone())
+            .arg(float)
+            .exec(&mut conn)
+            .expect("failed to PUBLISH");
         print!("{line}");
     }
     Ok(())
