@@ -3,5 +3,13 @@ name = "stdin-to-redis-rs"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "publish"
+path = "src/publish/main.rs"
+
+[[bin]]
+name = "subscribe"
+path = "src/subscribe/main.rs"
+
 [dependencies]
 redis = "0.27.6"

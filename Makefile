@@ -8,6 +8,13 @@ all: build
 build:
 	cargo build
 
-.PHONY: run
-run:
-	cargo run -- stdin
+.PHONY: publish
+publish: run-publish
+
+.PHONY: subscribe
+subscribe: run-subscribe
+
+run-publish:
+run-subscribe:
+run-%:
+	cargo run --bin $* -- stdin

@@ -4,7 +4,7 @@ use std::env;
 use std::io;
 
 fn main() -> io::Result<()> {
-    let key = env::args().nth(1).expect("Usage: stdin-to-redis KEY");
+    let key = env::args().nth(1).expect("Usage: publish KEY");
     let mut conn = redis::Client::open("redis://:@localhost")
         .expect("Invalid connection URL")
         .get_connection()
