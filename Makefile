@@ -4,6 +4,10 @@
 .PHONY: all
 all: build
 
-.PHONY: build run
-build run:
-	cargo $@
+.PHONY: build
+build:
+	cargo build
+
+.PHONY: run
+run:
+	cargo run -- stdin
