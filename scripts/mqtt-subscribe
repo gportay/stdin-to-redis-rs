@@ -1,0 +1,58 @@
+#!/bin/bash
+# SPDX-License-Identifier: LGPL-2.1-only
+# SPDX-FileCopyrightText: Copyright 2024 Gaël PORTAY
+
+set -e
+
+if [[ "$#" -lt 2 ]]
+then
+	cat <<EOF
+Usage: ${0##*/} URL KEY
+EOF
+	echo "Error: Too few arguments!"
+	exit 1
+fi >&2
+
+# [user[:passwd]@]localhost[:port]
+hostport="${1#*@}"
+userpasswd="${1%%@*}"
+if [[ "$hostport" == "$userpasswd" ]]
+then
+	unset userpasswd
+fi
+if [[ "$userpasswd" ]]
+then
+	user="${userpasswd%%:*}"
+	passwd="${userpasswd#*:}"
+	if [[ "$user" == "$passwd" ]]
+	then
+		unset passwd
+	fi
+fi
+host="${hostport%%:*}"
+port="${hostport#*:}"
+if [[ "$host" == "$port" ]]
+then
+	unset port
+fi
+unset hostport
+unset userpasswd
+
+args=()
+if [[ "$port" ]]
+then
+	args+=("-p" "$port")
+fi
+if [[ "$user" ]]
+then
+	args+=("-u" "$user")
+fi
+if [[ "$passwd" ]]
+then
+	args+=("-P" "$passwd")
+fi
+
+while read line
+do
+	jq --raw-output .value <<<"$line"
+done < <(mosquitto_sub "${args[@]}" -h "${host:?}" -t "v0")

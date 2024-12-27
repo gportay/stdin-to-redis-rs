@@ -17,4 +17,12 @@ subscribe: run-subscribe
 run-publish:
 run-subscribe:
 run-%:
-	cargo run --bin $* -- stdin
+	cargo run --quiet --bin $* -- stdin
+
+.PHONY: mqtt-publish
+mqtt-publish:
+	scripts/mqtt-publish localhost stdin
+
+.PHONY: mqtt-subscribe
+mqtt-subscribe:
+	scripts/mqtt-subscribe localhost stdin | $(MAKE) run-publish
