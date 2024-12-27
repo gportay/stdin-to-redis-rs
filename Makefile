@@ -4,9 +4,9 @@
 .PHONY: all
 all: build
 
-.PHONY: build
-build:
-	cargo build
+.PHONY: build clean
+build clean:
+	cargo $@
 
 .PHONY: publish
 publish: run-publish
