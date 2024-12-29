@@ -13,7 +13,7 @@ fn main() -> io::Result<()> {
     while io::stdin().read_line(&mut buffer)? > 0 {
         let line = std::mem::take(&mut buffer);
         let value = line.strip_suffix("\n").unwrap();
-        let float= match value.parse::<f64>() {
+        let float = match value.parse::<f64>() {
             Ok(f) => {
                 f
             },

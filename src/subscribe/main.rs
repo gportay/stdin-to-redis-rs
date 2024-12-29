@@ -3,7 +3,7 @@
 use std::env;
 
 fn main() -> redis::RedisResult<()> {
-    let args= env::args().skip(1).collect::<Vec<String>>();
+    let args = env::args().skip(1).collect::<Vec<String>>();
     env::args().nth(1).expect("Usage: subscribe CHANNEL...");
     let mut conn = redis::Client::open("redis://:@localhost")
         .expect("Invalid connection URL")
